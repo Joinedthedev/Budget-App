@@ -7,14 +7,13 @@ export const useBudgets = () => {
   return useContext(BudgetsContext);
 };
 
-/** 
+/**
  * BudgetProvider essentially takes in some sort of prop and passes value of that prop to its children and the
  * children of their children and so forth and so on
  * Everything thats wrapped within budget provider, has access to that value being passed in
  * which makes it easy to share information and manage states across components.
  */
 export const BudgetProvider = ({ children }) => {
-
   /**
    * Using use state here to change, set, and track budget/expense values as need arises.
    * Each budget/expense is put in an array and is indentified via a unique ID.
@@ -31,21 +30,43 @@ export const BudgetProvider = ({ children }) => {
   };
 
   /**
-   * 
+   * This adds a new budget to an array of budgets by updating our budgets state. Each budget has a name and max value.
+   * If a budget already exists, return that budget, otherwise construct a new array containing all the
+   * previous budgets and add the new budget object to it.
    */
-  const addBudget = ({name, max}) => {
-    setBudgets(prevBudgets => {
-      if (prevBudgets.find(budget => budget.name === name)){
-        return prevBudgets
+  const addBudget = ({ name, max }) => {
+    setBudgets((prevBudgets) => {
+      if (prevBudgets.find((budget) => budget.name === name)) {
+        return prevBudgets;
       }
-      return [...prevBudgets, {id: uuidV4(), name, max} ]
+      return [...prevBudgets, { id: uuidV4(), name, max }];
+    });
+  };
+
+  /**
+   * This adds a new expense to an array of expenses by updating our expenses state. Each budget has a desc, amount, and budgetID value.
+   * It works by constructing a new array of all the previous expenses and adding a new expense object to it.
+   */
+  const addExpense = ({ description, amount, budgetId }) => {
+    setExpenses(prevExpenses => {
+      return [...prevExpenses, { id: uuidV4(), description, amount, budgetId }];
+    });
+  };
+/**
+ * Deletes expenses by filtering array of expenses to disinclude ID of deleted expense
+ */
+  const deleteExpense = ({id}) => {
+    setExpenses(prevExpenses => {
+      return prevExpenses.filter(expense => expense.id !== id)
     })
   };
 
-
-  const deleteBudget = () => {};
-  const addExpense = () => {};
-  const deleteExpense = () => {};
+  /** Deletes budgets by filtering array of budgets to disinclude ID of deleted budgets */
+  const deleteBudget = ({id}) => {
+    setBudgets(prevBudgets => {
+      return prevBudgets.filter(budget => budget.id !== id)
+    })
+  };
 
   return (
     <BudgetsContext.Provider
