@@ -2,9 +2,8 @@ import React from "react";
 import { Card, ProgressBar, Stack, Button } from "react-bootstrap";
 import { currencyFormatter } from "./utils";
 
-/** The purpose of this function is to get the correct variant of the progress bar based
- *  on the percentage of money spent in view of the decided budget
- * It divides the amount spent by the ma to produce a ratio.
+/** This returns a string that is used to change the progress bar variant(color essentially)
+ *  based on the amount of money spent within a budget. 
  */
 const getProgressBarVariant = (amount, max) => {
   const ratio = amount / max;
@@ -25,9 +24,8 @@ const getProgressBarVariant = (amount, max) => {
   }
 };
 
-/** The budget card component takes in three props name, amount, and max
- * so it can be dynamically used across the application. We import currency formatter component
- * to format the amount passed through as a currency.
+/** The budget card component takes in four props name, amount, gray and max.
+ * It represents the main cards used to display the budgets on the screen.
  */
 
 const BudgetCard = ({ name, amount, max, gray }) => {
@@ -57,6 +55,7 @@ const BudgetCard = ({ name, amount, max, gray }) => {
           </div>
         </Card.Title>
 
+{/** Progress bar is a bootstrap component. The variant(color) changes based on our getProgressBarVariant function */}
         <ProgressBar
           className="rounded-pill"
           variant={getProgressBarVariant(amount, max)}
@@ -64,7 +63,7 @@ const BudgetCard = ({ name, amount, max, gray }) => {
           max={max}
           now={amount}
         />
-
+{/** */}
         <Stack className="mt-4" direction="horizontal" gap="2">
           <Button variant="outline-primary" className="ms-auto">
             Add Expense
