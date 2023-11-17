@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import { v4 as uuidV4 } from "uuid";
+import useLocalStorage from "../hooks/useLocalStorage";
+
 
 const BudgetsContext = React.createContext();
 
@@ -17,9 +19,10 @@ export const BudgetProvider = ({ children }) => {
   /**
    * Using use state here to change, set, and track budget/expense values as need arises.
    * Each budget/expense is put in an array and is indentified via a unique ID.
+   * The arrays are then stored in local storage.
    */
-  const [budgets, setBudgets] = useState([]);
-  const [expenses, setExpenses] = useState([]);
+  const [budgets, setBudgets] = useLocalStorage("budgets", []);
+  const [expenses, setExpenses] = useLocalStorage("expenses", []);
 
   /**
    * This essentially looks through the array of expenses and returns a unique expense
