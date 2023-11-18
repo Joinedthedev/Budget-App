@@ -28,7 +28,7 @@ const getProgressBarVariant = (amount, max) => {
  * It represents the main cards used to display the budgets on the screen.
  */
 
-const BudgetCard = ({ name, amount, max, gray }) => {
+const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick }) => {
 
     /**Code below changes the color of the card based on whether user has exceeded budget.
      * It pushes the colors into an array and sets that array to the className of the card.
@@ -65,7 +65,7 @@ const BudgetCard = ({ name, amount, max, gray }) => {
         />
 {/** */}
         <Stack className="mt-4" direction="horizontal" gap="2">
-          <Button variant="outline-primary" className="ms-auto">
+          <Button variant="outline-primary" className="ms-auto" onClick={ onAddExpenseClick}>
             Add Expense
           </Button>
           <Button variant="outline-secondary">View Expense</Button>
