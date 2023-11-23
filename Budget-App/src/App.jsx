@@ -25,7 +25,7 @@ function App() {
       <Container className="my-4">
         <Stack direction="horizontal" gap="2" className="mb-4">
           <h1 className="me-auto">Budgets</h1>
-          <Button variant="primary" onClick={() => setShowAddBudgetModal}>
+          <Button variant="primary" onClick={() => setShowAddBudgetModal(true)}>
             {" "}
             Add Budget
           </Button>
@@ -72,7 +72,7 @@ function App() {
 
       <AddExpenseModal
         show={showAddExpenseModal}
-        handleClose={() => setShowAddExpenseModal(false)}
+        handleClose={ () => setShowAddExpenseModal(false)}
         
         /** The purpose of defaultBudgetId is that when you add an expense to a budget it should default to the specfic budget
          * the user is adding it to instead of showing the first option which is uncategorized. The only time it will show uncategorized is
