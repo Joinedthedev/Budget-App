@@ -3,7 +3,7 @@ import { Card, ProgressBar, Stack, Button } from "react-bootstrap";
 import { currencyFormatter } from "./utils";
 
 /** This returns a string that is used to change the progress bar variant(color essentially)
- *  based on the amount of money spent within a budget. 
+ *  based on the amount of money spent within a budget.
  */
 const getProgressBarVariant = (amount, max) => {
   const ratio = amount / max;
@@ -29,12 +29,11 @@ const getProgressBarVariant = (amount, max) => {
  */
 
 const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick }) => {
-
-    /**Code below changes the color of the card based on whether user has exceeded budget.
-     * It pushes the colors into an array and sets that array to the className of the card.
-     * if the amount is greater than the max, the card will turn red
-     * else it is by default gray 
-    */
+  /**Code below changes the color of the card based on whether user has exceeded budget.
+   * It pushes the colors into an array and sets that array to the className of the card.
+   * if the amount is greater than the max, the card will turn red
+   * else it is by default gray
+   */
   const classNames = [];
   if (amount > max) {
     classNames.push("bg-danger", "bg-opacity-10"); // red background
@@ -48,24 +47,37 @@ const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick }) => {
           <div className="me-2">{name}</div>{" "}
           {/** Name of the specific budget e.g Entertainment, Food Travel, Etc */}
           <div className="d-flex align-items-baseline">
-            {currencyFormatter.format(amount)} /{" "}
-            <span className="fs-6 text-muted ms-1">
-              {currencyFormatter.format(max)}
-            </span>
+            {currencyFormatter.format(amount)}
+            {/** This portion of code below is checking if a max value exists. Essentially if max exissts, display it.
+             * if not, don't display it
+             */}
+            {max ? (
+              <span className="fs-6 text-muted ms-1">
+                / {currencyFormatter.format(max)}
+              </span>
+            ) : null}
           </div>
         </Card.Title>
 
-{/** Progress bar is a bootstrap component. The variant(color) changes based on our getProgressBarVariant function */}
-        <ProgressBar
-          className="rounded-pill"
-          variant={getProgressBarVariant(amount, max)}
-          min={0}
-          max={max}
-          now={amount}
-        />
-{/** */}
+        {/** Progress bar is a bootstrap component. The variant(color) changes based on our getProgressBarVariant function
+         * it will only display if a max value exists
+         */}
+        {max ? ( 
+          <ProgressBar
+            className="rounded-pill"
+            variant={getProgressBarVariant(amount, max)}
+            min={0}
+            max={max}
+            now={amount}
+          />
+        ) : null}
+        {/** */}
         <Stack className="mt-4" direction="horizontal" gap="2">
-          <Button variant="outline-primary" className="ms-auto" onClick={ onAddExpenseClick}>
+          <Button
+            variant="outline-primary"
+            className="ms-auto"
+            onClick={onAddExpenseClick}
+          >
             Add Expense
           </Button>
           <Button variant="outline-secondary">View Expense</Button>

@@ -5,6 +5,7 @@ import AddBudgetModal from "./components/AddBudgetModal";
 import { useState } from "react";
 import { useBudgets } from "./context/BudgetsContext";
 import AddExpenseModal from "./components/AddExpenseModal";
+import UncategorizedBudgetCard from "./components/UncategorizedBudgetCard";
 
 function App() {
   //These are the states that manage our modals.
@@ -63,6 +64,7 @@ function App() {
               />
             );
           })}
+          <UncategorizedBudgetCard/>
         </div>
       </Container>
       <AddBudgetModal
@@ -80,6 +82,8 @@ function App() {
          */
         defaultBudgetId={addExpenseModalBudgetId}
       />
+
+
     </>
   );
 }
