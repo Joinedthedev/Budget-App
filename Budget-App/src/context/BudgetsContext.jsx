@@ -49,7 +49,7 @@ export const BudgetProvider = ({ children }) => {
   };
 
   /**
-   * This adds a new expense to an array of expenses by updating our expenses state. Each budget has a desc, amount, and budgetID value.
+   * Similar to the addBudget, This adds a new expense to an array of expenses by updating our expenses state. Each budget has a desc, amount, and budgetID value.
    * It works by constructing a new array of all the previous expenses and adding a new expense object to it.
    */
   const addExpense = ({ description, amount, budgetId }) => {
