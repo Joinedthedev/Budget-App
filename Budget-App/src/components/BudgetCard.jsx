@@ -28,7 +28,14 @@ const getProgressBarVariant = (amount, max) => {
  * It represents the main cards used to display the budgets on the screen.
  */
 
-const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick }) => {
+const BudgetCard = ({
+  hideButtons,
+  name,
+  amount,
+  max,
+  gray,
+  onAddExpenseClick,
+}) => {
   /**Code below changes the color of the card based on whether user has exceeded budget.
    * It pushes the colors into an array and sets that array to the className of the card.
    * if the amount is greater than the max, the card will turn red
@@ -62,7 +69,7 @@ const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick }) => {
         {/** Progress bar is a bootstrap component. The variant(color) changes based on our getProgressBarVariant function
          * it will only display if a max value exists
          */}
-        {max ? ( 
+        {max ? (
           <ProgressBar
             className="rounded-pill"
             variant={getProgressBarVariant(amount, max)}
@@ -72,16 +79,18 @@ const BudgetCard = ({ name, amount, max, gray, onAddExpenseClick }) => {
           />
         ) : null}
         {/** */}
-        <Stack className="mt-4" direction="horizontal" gap="2">
-          <Button
-            variant="outline-primary"
-            className="ms-auto"
-            onClick={onAddExpenseClick}
-          >
-            Add Expense
-          </Button>
-          <Button variant="outline-secondary">View Expense</Button>
-        </Stack>
+        {!hideButtons && (
+          <Stack className="mt-4" direction="horizontal" gap="2">
+            <Button
+              variant="outline-primary"
+              className="ms-auto"
+              onClick={onAddExpenseClick}
+            >
+              Add Expense
+            </Button>
+            <Button variant="outline-secondary">View Expense</Button>
+          </Stack>
+        )}
       </Card.Body>
     </Card>
   );
