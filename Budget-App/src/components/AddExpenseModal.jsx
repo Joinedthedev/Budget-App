@@ -16,7 +16,7 @@ const AddExpenseModal = ({ show, handleClose, defaultBudgetId }) => {
     e.preventDefault();
     addExpense({
       /** //takes the current value of our description from our form and assigns it to expense object */
-      descriptionRef: descriptionRef.current.value,
+      description: descriptionRef.current.value,
 
       /** //takes the current value of our amount from our form and assigns it to expense object */
       amount: parseFloat(amountRef.current.value),

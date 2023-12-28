@@ -2,6 +2,7 @@ import { Container } from "react-bootstrap";
 import { Stack, Button } from "react-bootstrap";
 import BudgetCard from "./components/BudgetCard";
 import AddBudgetModal from "./components/AddBudgetModal";
+import ViewExpensesModal from "./components/ViewExpensesModal";
 import { useState } from "react";
 import { useBudgets } from "./context/BudgetsContext";
 import AddExpenseModal from "./components/AddExpenseModal";
@@ -12,6 +13,7 @@ function App() {
   //These are the states that manage our modals.
   const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
   const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
+  const [viewExpensesModalBudgetId, setViewExpensesModalBudgetId] = useState();
   const [addExpenseModalBudgetId, setShowAddExpenseModalBudgetId] = useState();
   const { budgets, getBudgetExpenses } = useBudgets();
 
@@ -21,9 +23,9 @@ function App() {
   };
   return (
     <>
-    {/** container,  stack, and button are all bootstrap components. Think of container as a wrapper and stack is a group within
-     *  that wrappper. Button is a button
-     */}
+      {/** container,  stack, and button are all bootstrap components. Think of container as a wrapper and stack is a group within
+       *  that wrappper. Button is a button
+       */}
       <Container className="my-4">
         <Stack direction="horizontal" gap="2" className="mb-4">
           <h1 className="me-auto">Budgets</h1>
@@ -32,7 +34,6 @@ function App() {
             Add Budget
           </Button>
 
-          
           <Button variant="outline-primary" onClick={openAddExpenseModal}>
             Add Expense
           </Button>
@@ -54,7 +55,6 @@ function App() {
               0
             );
             return (
-
               <BudgetCard
                 key={budget.id}
                 name={budget.name}
@@ -62,11 +62,20 @@ function App() {
                 max={budget.max}
                 gray
                 onAddExpenseClick={() => openAddExpenseModal(budget.id)}
+                onViewExpensesClick={() =>
+                  setViewExpensesModalBudgetId(budget.id)
+                }
               />
             );
           })}
-          <UncategorizedBudgetCard/>
-          <TotalBudgetCard/>
+          <UncategorizedBudgetCard
+            onAddExpenseClick={openAddExpenseModal}
+            onViewExpensesClick={() =>
+              setViewExpensesModalBudgetId(UNCATEGORIZED_BUDGET_ID)
+            }
+           
+          />
+          <TotalBudgetCard />
         </div>
       </Container>
       <AddBudgetModal
@@ -76,16 +85,17 @@ function App() {
 
       <AddExpenseModal
         show={showAddExpenseModal}
-        handleClose={ () => setShowAddExpenseModal(false)}
-        
+        handleClose={() => setShowAddExpenseModal(false)}
         /** The purpose of defaultBudgetId is that when you add an expense to a budget it should default to the specfic budget
          * the user is adding it to instead of showing the first option which is uncategorized. The only time it will show uncategorized is
          * when you are adding an expense that isn't attached to a budget. In other words, clicking the addExpense on the top right of the display.
          */
         defaultBudgetId={addExpenseModalBudgetId}
       />
-
-
+        <ViewExpensesModal
+        budgetID={viewExpensesModalBudgetId}
+        handleClose={() => setViewExpensesModalBudgetId()}
+      />
     </>
   );
 }

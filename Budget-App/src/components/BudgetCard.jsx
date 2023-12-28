@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, ProgressBar, Stack, Button } from "react-bootstrap";
 import { currencyFormatter } from "./utils";
+import ViewExpensesModal from "./ViewExpensesModal";
 
 /** This returns a string that is used to change the progress bar variant(color essentially)
  *  based on the amount of money spent within a budget.
@@ -35,6 +36,7 @@ const BudgetCard = ({
   max,
   gray,
   onAddExpenseClick,
+  onViewExpensesClick,
 }) => {
   /**Code below changes the color of the card based on whether user has exceeded budget.
    * It pushes the colors into an array and sets that array to the className of the card.
@@ -88,7 +90,9 @@ const BudgetCard = ({
             >
               Add Expense
             </Button>
-            <Button variant="outline-secondary">View Expense</Button>
+            <Button onClick={onViewExpensesClick} variant="outline-secondary">
+              View Expense
+            </Button>
           </Stack>
         )}
       </Card.Body>
